@@ -1,6 +1,5 @@
 using GameService as service from '../../srv/game-service';
 
-
 annotate service.Student with @(
     odata.draft.enabled,
     UI.LineItem : [
@@ -8,6 +7,7 @@ annotate service.Student with @(
             $Type : 'UI.DataField',
             Label : 'Student_ID',
             Value : Student_ID,
+            ![@UI.Hidden],
         },
         {
             $Type : 'UI.DataField',
@@ -21,6 +21,8 @@ annotate service.Student with @(
         },
     ]
 );
+
+
 annotate service.Student with @(
     UI.FieldGroup #GeneratedGroup1 : {
         $Type : 'UI.FieldGroupType',
@@ -29,15 +31,16 @@ annotate service.Student with @(
                 $Type : 'UI.DataField',
                 Label : 'Student_ID',
                 Value : Student_ID,
+                ![@UI.Hidden],
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'First_name',
+                Label : 'First name',
                 Value : First_name,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'Last_name',
+                Label : 'Last name',
                 Value : Last_name,
             },
         ],
@@ -49,19 +52,23 @@ annotate service.Student with @(
             Label : 'General Information',
             Target : '@UI.FieldGroup#GeneratedGroup1',
         },
+        {
+            $Type: 'UI.ReferenceFacet',
+            ID: 'FavouriteGames',
+            Label: 'Favourite Games',
+            Target: '@UI.FieldGroup#FavoriteGamesGroup',
+        }
     ]
 );
 
 annotate service.FavoriteGame with @(
-    UI.FieldGroup #GeneratedGroup1 : {
-        $Type : 'UI.FieldGroupType',
-        Data : [
-            {
-                $Type : 'UI.DataField',
-                Label : 'Game_ID',
-                Value : Game_ID,
-            },
-	{
+    UI.LineItem : [
+        {
+            $Type : 'UI.DataField',
+            Label : 'Game ID',
+            Value : Game_ID,
+        },
+        {
             $Type : 'UI.DataField',
             Label : 'Student ID',
             Value : Student_ID,
@@ -71,9 +78,7 @@ annotate service.FavoriteGame with @(
             Label : 'Game',
             Value : to_game.Name,
         },
-        ],
-    },
-
+    ]
 );
 
 annotate service.Student with @(
@@ -89,60 +94,7 @@ annotate service.Student with @(
                 $Type : 'UI.DataField',
                 Label : 'Game Name',
                 Value : to_favos.to_game.Name, 
-            },
-          
+            }
         ]
     }
 );
-
-annotate service.Game with @(
-    UI.LineItem : [
-        {
-            $Type : 'UI.DataField',
-            Label : 'Game_ID',
-            Value : Game_ID,
-        },
-        {
-            $Type : 'UI.DataField',
-            Label : 'Game_Name',
-            Value : Name,
-        },
-        {
-            $Type : 'UI.DataField',
-            Label : 'Release_Date',
-            Value : Release_date,
-        },
-    ]
-);
-
-annotate service.Game with @(
-    UI.FieldGroup #GeneratedGroup2 : {
-        $Type : 'UI.FieldGroupType',
-        Data : [
-            {
-                $Type : 'UI.DataField',
-                Label : 'Game_ID',
-                Value : Game_ID,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'Game_Name',
-                Value : Name,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'Release_Date',
-                Value : Release_date,
-            },
-        ],
-    },
-    UI.Facets : [
-        {
-            $Type : 'UI.ReferenceFacet',
-            ID : 'GeneratedFacet2',
-            Label : 'Game Details',
-            Target : '@UI.FieldGroup#GeneratedGroup2',
-        },
-    ]
-);
-
